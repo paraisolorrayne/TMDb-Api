@@ -16,6 +16,11 @@
 		414243E81E85397A0091A243 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 414243E61E85397A0091A243 /* LaunchScreen.storyboard */; };
 		414243F31E85397A0091A243 /* TMDb_ApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414243F21E85397A0091A243 /* TMDb_ApiTests.m */; };
 		414243FE1E85397A0091A243 /* TMDb_ApiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414243FD1E85397A0091A243 /* TMDb_ApiUITests.m */; };
+		4142440F1E854B070091A243 /* TMDbService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4142440E1E854B070091A243 /* TMDbService.m */; };
+		414244131E855A110091A243 /* MoviePropertyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 414244121E855A110091A243 /* MoviePropertyObject.m */; };
+		84ECD0181C46C90B142E1078 /* libPods-TMDb-ApiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB38726AA331C9AAD27FFD8 /* libPods-TMDb-ApiTests.a */; };
+		E75C773AABE6B818A72A0A3E /* libPods-TMDb-ApiUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B69D91AC921482B6F9A90CE1 /* libPods-TMDb-ApiUITests.a */; };
+		EF6A12D72E6F5F6DB9DD8587 /* libPods-TMDb-Api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 023612CF162A8C66085B6520 /* libPods-TMDb-Api.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		023612CF162A8C66085B6520 /* libPods-TMDb-Api.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMDb-Api.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A6DD94E4FD7F1522C2F89E6 /* Pods-TMDb-Api.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-Api.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-Api/Pods-TMDb-Api.release.xcconfig"; sourceTree = "<group>"; };
+		0B135EFCE412EBED3526536E /* Pods-TMDb-ApiUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-ApiUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-ApiUITests/Pods-TMDb-ApiUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		23CA19177846BD06BBA3538F /* Pods-TMDb-ApiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-ApiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-ApiTests/Pods-TMDb-ApiTests.release.xcconfig"; sourceTree = "<group>"; };
 		414243D21E85397A0091A243 /* TMDb-Api.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDb-Api.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		414243D61E85397A0091A243 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		414243D81E85397A0091A243 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -53,6 +62,16 @@
 		414243F91E85397A0091A243 /* TMDb-ApiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TMDb-ApiUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		414243FD1E85397A0091A243 /* TMDb_ApiUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TMDb_ApiUITests.m; sourceTree = "<group>"; };
 		414243FF1E85397A0091A243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4142440B1E8540F90091A243 /* api_Key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = api_Key.h; path = ../api_Key.h; sourceTree = "<group>"; };
+		4142440D1E854B070091A243 /* TMDbService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMDbService.h; sourceTree = "<group>"; };
+		4142440E1E854B070091A243 /* TMDbService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDbService.m; sourceTree = "<group>"; };
+		414244111E855A110091A243 /* MoviePropertyObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoviePropertyObject.h; sourceTree = "<group>"; };
+		414244121E855A110091A243 /* MoviePropertyObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoviePropertyObject.m; sourceTree = "<group>"; };
+		5EB38726AA331C9AAD27FFD8 /* libPods-TMDb-ApiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMDb-ApiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E9BD57046A8B32A91ABD29 /* Pods-TMDb-Api.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-Api.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-Api/Pods-TMDb-Api.debug.xcconfig"; sourceTree = "<group>"; };
+		956917EEF5295CEF74CA92DD /* Pods-TMDb-ApiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-ApiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-ApiTests/Pods-TMDb-ApiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B69D91AC921482B6F9A90CE1 /* libPods-TMDb-ApiUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMDb-ApiUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E60F7DDF1732A5B4D4493844 /* Pods-TMDb-ApiUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-ApiUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-ApiUITests/Pods-TMDb-ApiUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF6A12D72E6F5F6DB9DD8587 /* libPods-TMDb-Api.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84ECD0181C46C90B142E1078 /* libPods-TMDb-ApiTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75C773AABE6B818A72A0A3E /* libPods-TMDb-ApiUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +109,8 @@
 				414243F11E85397A0091A243 /* TMDb-ApiTests */,
 				414243FC1E85397A0091A243 /* TMDb-ApiUITests */,
 				414243D31E85397A0091A243 /* Products */,
+				9963F20404B4BCB27E600784 /* Pods */,
+				CC3FB7C75588E1F121C0FC07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +127,9 @@
 		414243D41E85397A0091A243 /* TMDb-Api */ = {
 			isa = PBXGroup;
 			children = (
+				414244101E8559FB0091A243 /* Object */,
+				4142440C1E854AE10091A243 /* Service */,
+				4142440B1E8540F90091A243 /* api_Key.h */,
 				414243D81E85397A0091A243 /* AppDelegate.h */,
 				414243D91E85397A0091A243 /* AppDelegate.m */,
 				414243DB1E85397A0091A243 /* ViewController.h */,
@@ -143,6 +170,48 @@
 			path = "TMDb-ApiUITests";
 			sourceTree = "<group>";
 		};
+		4142440C1E854AE10091A243 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4142440D1E854B070091A243 /* TMDbService.h */,
+				4142440E1E854B070091A243 /* TMDbService.m */,
+			);
+			name = Service;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		414244101E8559FB0091A243 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				414244111E855A110091A243 /* MoviePropertyObject.h */,
+				414244121E855A110091A243 /* MoviePropertyObject.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
+		9963F20404B4BCB27E600784 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				78E9BD57046A8B32A91ABD29 /* Pods-TMDb-Api.debug.xcconfig */,
+				0A6DD94E4FD7F1522C2F89E6 /* Pods-TMDb-Api.release.xcconfig */,
+				956917EEF5295CEF74CA92DD /* Pods-TMDb-ApiTests.debug.xcconfig */,
+				23CA19177846BD06BBA3538F /* Pods-TMDb-ApiTests.release.xcconfig */,
+				0B135EFCE412EBED3526536E /* Pods-TMDb-ApiUITests.debug.xcconfig */,
+				E60F7DDF1732A5B4D4493844 /* Pods-TMDb-ApiUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CC3FB7C75588E1F121C0FC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				023612CF162A8C66085B6520 /* libPods-TMDb-Api.a */,
+				5EB38726AA331C9AAD27FFD8 /* libPods-TMDb-ApiTests.a */,
+				B69D91AC921482B6F9A90CE1 /* libPods-TMDb-ApiUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,9 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414244021E85397A0091A243 /* Build configuration list for PBXNativeTarget "TMDb-Api" */;
 			buildPhases = (
+				C29A5BB40EA6757F36DD4CC3 /* [CP] Check Pods Manifest.lock */,
 				414243CE1E85397A0091A243 /* Sources */,
 				414243CF1E85397A0091A243 /* Frameworks */,
 				414243D01E85397A0091A243 /* Resources */,
+				D69FC11BE6C016479FD23B79 /* [CP] Embed Pods Frameworks */,
+				2F78CDDD33C1B02FCBBA827D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +239,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414244051E85397A0091A243 /* Build configuration list for PBXNativeTarget "TMDb-ApiTests" */;
 			buildPhases = (
+				0E6A15EBD25DD0F2EDD25CE9 /* [CP] Check Pods Manifest.lock */,
 				414243EA1E85397A0091A243 /* Sources */,
 				414243EB1E85397A0091A243 /* Frameworks */,
 				414243EC1E85397A0091A243 /* Resources */,
+				0E47E0549DE81E7AAA86080D /* [CP] Embed Pods Frameworks */,
+				C2A73007C083C7DC19AB80C4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -185,9 +260,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 414244081E85397A0091A243 /* Build configuration list for PBXNativeTarget "TMDb-ApiUITests" */;
 			buildPhases = (
+				B10E7FD6ABF6F1F5FEC9C694 /* [CP] Check Pods Manifest.lock */,
 				414243F51E85397A0091A243 /* Sources */,
 				414243F61E85397A0091A243 /* Frameworks */,
 				414243F71E85397A0091A243 /* Resources */,
+				FDD504091DB48332417E42EF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,6 +351,129 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0E47E0549DE81E7AAA86080D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDb-ApiTests/Pods-TMDb-ApiTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0E6A15EBD25DD0F2EDD25CE9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2F78CDDD33C1B02FCBBA827D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDb-Api/Pods-TMDb-Api-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B10E7FD6ABF6F1F5FEC9C694 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C29A5BB40EA6757F36DD4CC3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C2A73007C083C7DC19AB80C4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDb-ApiTests/Pods-TMDb-ApiTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D69FC11BE6C016479FD23B79 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDb-Api/Pods-TMDb-Api-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDD504091DB48332417E42EF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMDb-ApiUITests/Pods-TMDb-ApiUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		414243CE1E85397A0091A243 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -281,8 +481,10 @@
 			files = (
 				414243DD1E85397A0091A243 /* ViewController.m in Sources */,
 				414243E31E85397A0091A243 /* TMDb_Api.xcdatamodeld in Sources */,
+				414244131E855A110091A243 /* MoviePropertyObject.m in Sources */,
 				414243DA1E85397A0091A243 /* AppDelegate.m in Sources */,
 				414243D71E85397A0091A243 /* main.m in Sources */,
+				4142440F1E854B070091A243 /* TMDbService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,10 +631,12 @@
 		};
 		414244031E85397A0091A243 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78E9BD57046A8B32A91ABD29 /* Pods-TMDb-Api.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 39H6XWV852;
 				INFOPLIST_FILE = "TMDb-Api/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "devtech.com.br.TMDb-Api";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -441,10 +645,12 @@
 		};
 		414244041E85397A0091A243 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A6DD94E4FD7F1522C2F89E6 /* Pods-TMDb-Api.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 39H6XWV852;
 				INFOPLIST_FILE = "TMDb-Api/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "devtech.com.br.TMDb-Api";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -453,6 +659,7 @@
 		};
 		414244061E85397A0091A243 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 956917EEF5295CEF74CA92DD /* Pods-TMDb-ApiTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 39H6XWV852;
@@ -466,6 +673,7 @@
 		};
 		414244071E85397A0091A243 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23CA19177846BD06BBA3538F /* Pods-TMDb-ApiTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 39H6XWV852;
@@ -479,6 +687,7 @@
 		};
 		414244091E85397A0091A243 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B135EFCE412EBED3526536E /* Pods-TMDb-ApiUITests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 39H6XWV852;
 				INFOPLIST_FILE = "TMDb-ApiUITests/Info.plist";
@@ -491,6 +700,7 @@
 		};
 		4142440A1E85397A0091A243 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E60F7DDF1732A5B4D4493844 /* Pods-TMDb-ApiUITests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 39H6XWV852;
 				INFOPLIST_FILE = "TMDb-ApiUITests/Info.plist";
@@ -520,6 +730,7 @@
 				414244041E85397A0091A243 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		414244051E85397A0091A243 /* Build configuration list for PBXNativeTarget "TMDb-ApiTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +739,7 @@
 				414244071E85397A0091A243 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		414244081E85397A0091A243 /* Build configuration list for PBXNativeTarget "TMDb-ApiUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +748,7 @@
 				4142440A1E85397A0091A243 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
