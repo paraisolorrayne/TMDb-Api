@@ -13,6 +13,8 @@
 @property (strong, nonatomic) NSArray <MoviePropertyObject *> *movieCollectionResults;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *overwriteLabel;
+@property (strong, nonatomic) IBOutlet UILabel *popularTitle;
+@property (strong, nonatomic) IBOutlet UILabel *popularOverwrite;
 
 
 @end
@@ -23,6 +25,8 @@
     [super viewDidLoad];
     self.titleLabel.text = @"";
     self.overwriteLabel.text = @"";
+    self.popularTitle.text = @"";
+    self.popularOverwrite.text = @"";
 }
 
 
@@ -32,6 +36,10 @@
 }
 - (IBAction)searchMovie:(id)sender {
     [self buscaFilme];
+}
+- (IBAction)searchPopular:(id)sender {
+    [self buscaPopular];
+    
 }
 
 -(void)buscaFilme {
@@ -45,6 +53,20 @@
     self.titleLabel.text = _movieCollectionResults.lastObject.original_title;
     self.overwriteLabel.text = _movieCollectionResults.lastObject.overview;
 }
+
+
+-(void)buscaPopular {
+    NSString *pagina = @"1";
+    [[TMDbService defaultService]fetchPopular:pagina success:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
+        self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResults];
+    } error:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Erro");
+        NSLog(@"%@", _movieCollectionResults);
+    } ];
+    self.popularTitle.text = _movieCollectionResults.lastObject.original_title;
+    self.popularOverwrite.text = NSLocalizedString(_movieCollectionResults.firstObject.overview, nil);
+}
+
 
 -(void)busca {
     NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
