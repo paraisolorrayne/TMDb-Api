@@ -10,6 +10,7 @@
 #import "MoviePropertyObject.h"
 
 @interface HomeViewController : UIViewController
+
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UIButton *searchButton;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentedControlOption;

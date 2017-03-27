@@ -7,8 +7,10 @@
 //
 
 #import "DetailsViewController.h"
-
+#import <AFNetworking/UIImageView+AFNetworking.h>
+static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 @interface DetailsViewController ()
+@property (strong, nonatomic) IBOutlet UIImageView *posterFilm;
 
 @end
 
@@ -16,8 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _titleLabel.layer.borderColor = [UIColor whiteColor].CGColor;
-    _titleLabel.layer.borderWidth = 4.0;
+   // _titleLabel.layer.borderColor = [UIColor whiteColor].CGColor;
+   // _titleLabel.layer.borderWidth = 1.2;
+    
+    
+    _overviewDesc.text = self.movieDetail.overview;
+    _titleDesc.text = self.movieDetail.original_title;
+    
+    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movieDetail.poster_pathUrl];
+    NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
+    [_posterFilm setImageWithURL:posterUrlComplete];
+    
+     
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +57,7 @@
      
      */
     
-    NSString *trailer = @"";
+    NSString *trailer = @"RH3OxVFvTeg";
     
     NSURL *linkToAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"youtube://watch/%@",trailer]];
     NSURL *linkToWebURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.youtube.com/watch/%@",trailer]];

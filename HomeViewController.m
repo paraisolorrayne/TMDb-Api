@@ -10,6 +10,7 @@
 #import "TMDbService.h"
 #import "MovieCollectionViewCell.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "DetailsViewController.h"
 
 static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
@@ -149,19 +150,17 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     
 }
 
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@" segue para a tela de detalhes do filme");
+    DetailsViewController *movieDetailView = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"Details"];
+    MoviePropertyObject *movie = self.movieCollectionResultsPop [indexPath.row];
+    movieDetailView.movieDetail = movie;
+    [self.navigationController pushViewController:movieDetailView animated:YES];
+    
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    /*
-    if ([segue.identifier isEqualToString:@"showDetail"])
-    {
-        NSIndexPath *selectedIndexPath = [self.collectionView indexPathsForSelectedItems][0];
-        
-        // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
-        NSString *imageNameToLoad = [NSString stringWithFormat:@"%ld_full", (long)selectedIndexPath.row];
-        UIImage *image = [UIImage imageNamed:imageNameToLoad];
-        DetailViewController *detailViewController = segue.destinationViewController;
-        detailViewController.imageDetail = image;
-    }
-    */
+
 }
 
 
