@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOl-Il-w3H">
+                    <rect key="frame" x="0.0" y="636" width="375" height="21"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Label">
+                            <attributes>
+                                <font key="NSFont" metaFont="system" size="17"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JVj-gA-Qeq">
+                    <rect key="frame" x="6" y="10" width="363" height="616"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="uOl-Il-w3H" firstAttribute="top" secondItem="JVj-gA-Qeq" secondAttribute="bottom" constant="10" id="Ajg-AV-HXB"/>
+                <constraint firstAttribute="trailing" secondItem="uOl-Il-w3H" secondAttribute="trailing" id="FkS-oQ-6w1"/>
+                <constraint firstAttribute="bottom" secondItem="uOl-Il-w3H" secondAttribute="bottom" constant="10" id="GDM-1D-Ec5"/>
+                <constraint firstItem="JVj-gA-Qeq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="Suy-Ig-8sC"/>
+                <constraint firstAttribute="trailing" secondItem="JVj-gA-Qeq" secondAttribute="trailing" constant="6" id="WcN-Tx-7eQ"/>
+                <constraint firstItem="uOl-Il-w3H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vui-dE-Hno"/>
+                <constraint firstItem="JVj-gA-Qeq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="wUf-xs-JRu"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

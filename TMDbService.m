@@ -19,7 +19,6 @@ static NSString *const kTMDbMovieSearchPath = @"search/movie";
 static NSString *const kTMDbSearchParamQueryKey = @"query";
 static NSString *const kTMDbSearchResultsKey = @"results";
 static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
-static NSString *const kTMDbObjectIdKey = @"id";
 
 @interface TMDbService ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;

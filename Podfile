@@ -6,6 +6,8 @@ target 'TMDb-Api' do
   # use_frameworks!
   pod 'Mantle'
   pod 'AFNetworking', '~> 3.0'
+  pod 'iCarousel'
+  
   # Pods for TMDb-Api
 
   target 'TMDb-ApiTests' do

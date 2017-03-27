@@ -30,6 +30,7 @@
         
         //TMDb
         _poster_path = jsonDataObject[@"poster_path"];
+        _poster_pathUrl = [NSURL URLWithString:_poster_path];
         _overview = jsonDataObject[@"overview"];
         _original_title = jsonDataObject[@"original_title"];
         _tmdbID = jsonDataObject[@"imdb_id"];
