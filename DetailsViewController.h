@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MoviePropertyObject.h"
 
-@interface DetailsViewController : UIViewController
+@interface DetailsViewController : UIViewController <UIScrollViewDelegate>
 @property (strong, nonatomic) MoviePropertyObject *movieDetail;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *titleDesc;

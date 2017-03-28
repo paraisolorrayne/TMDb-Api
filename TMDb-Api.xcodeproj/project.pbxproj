@@ -23,6 +23,7 @@
 		41B14B5F1E8944EA0093FEBA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B14B5E1E8944EA0093FEBA /* QuartzCore.framework */; };
 		41B14B621E895D500093FEBA /* MovieCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B14B611E895D500093FEBA /* MovieCollectionViewCell.m */; };
 		41B14B641E89A52F0093FEBA /* carouselFilmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B14B631E89A52F0093FEBA /* carouselFilmView.xib */; };
+		41B14B671E8A84910093FEBA /* CarouselFilmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B14B661E8A84910093FEBA /* CarouselFilmView.m */; };
 		84ECD0181C46C90B142E1078 /* libPods-TMDb-ApiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB38726AA331C9AAD27FFD8 /* libPods-TMDb-ApiTests.a */; };
 		E75C773AABE6B818A72A0A3E /* libPods-TMDb-ApiUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B69D91AC921482B6F9A90CE1 /* libPods-TMDb-ApiUITests.a */; };
 		EF6A12D72E6F5F6DB9DD8587 /* libPods-TMDb-Api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 023612CF162A8C66085B6520 /* libPods-TMDb-Api.a */; };
@@ -80,6 +81,8 @@
 		41B14B601E895D500093FEBA /* MovieCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieCollectionViewCell.h; path = ../MovieCollectionViewCell.h; sourceTree = "<group>"; };
 		41B14B611E895D500093FEBA /* MovieCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieCollectionViewCell.m; path = ../MovieCollectionViewCell.m; sourceTree = "<group>"; };
 		41B14B631E89A52F0093FEBA /* carouselFilmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = carouselFilmView.xib; path = ../carouselFilmView.xib; sourceTree = "<group>"; };
+		41B14B651E8A84910093FEBA /* CarouselFilmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CarouselFilmView.h; path = ../CarouselFilmView.h; sourceTree = "<group>"; };
+		41B14B661E8A84910093FEBA /* CarouselFilmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CarouselFilmView.m; path = ../CarouselFilmView.m; sourceTree = "<group>"; };
 		5EB38726AA331C9AAD27FFD8 /* libPods-TMDb-ApiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMDb-ApiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E9BD57046A8B32A91ABD29 /* Pods-TMDb-Api.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-Api.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-Api/Pods-TMDb-Api.debug.xcconfig"; sourceTree = "<group>"; };
 		956917EEF5295CEF74CA92DD /* Pods-TMDb-ApiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDb-ApiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMDb-ApiTests/Pods-TMDb-ApiTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 		414243D41E85397A0091A243 /* TMDb-Api */ = {
 			isa = PBXGroup;
 			children = (
+				41B14B681E8A84C30093FEBA /* Carousel */,
 				414244101E8559FB0091A243 /* Object */,
 				4142440C1E854AE10091A243 /* Service */,
 				4142440B1E8540F90091A243 /* api_Key.h */,
@@ -154,7 +158,6 @@
 				41B14B611E895D500093FEBA /* MovieCollectionViewCell.m */,
 				414243DB1E85397A0091A243 /* ViewController.h */,
 				414243DC1E85397A0091A243 /* ViewController.m */,
-				41B14B631E89A52F0093FEBA /* carouselFilmView.xib */,
 				414243DE1E85397A0091A243 /* Main.storyboard */,
 				414243E41E85397A0091A243 /* Assets.xcassets */,
 				414243E61E85397A0091A243 /* LaunchScreen.storyboard */,
@@ -208,6 +211,16 @@
 				414244121E855A110091A243 /* MoviePropertyObject.m */,
 			);
 			name = Object;
+			sourceTree = "<group>";
+		};
+		41B14B681E8A84C30093FEBA /* Carousel */ = {
+			isa = PBXGroup;
+			children = (
+				41B14B651E8A84910093FEBA /* CarouselFilmView.h */,
+				41B14B661E8A84910093FEBA /* CarouselFilmView.m */,
+				41B14B631E89A52F0093FEBA /* carouselFilmView.xib */,
+			);
+			name = Carousel;
 			sourceTree = "<group>";
 		};
 		9963F20404B4BCB27E600784 /* Pods */ = {
@@ -510,6 +523,7 @@
 				41B14B5A1E8936940093FEBA /* HomeViewController.m in Sources */,
 				4142440F1E854B070091A243 /* TMDbService.m in Sources */,
 				41B14B5D1E8943180093FEBA /* DetailsViewController.m in Sources */,
+				41B14B671E8A84910093FEBA /* CarouselFilmView.m in Sources */,
 				41B14B621E895D500093FEBA /* MovieCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

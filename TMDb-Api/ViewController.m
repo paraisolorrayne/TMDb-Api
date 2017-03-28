@@ -57,7 +57,7 @@
 
 -(void)buscaPopular {
     NSString *pagina = @"1";
-    [[TMDbService defaultService]fetchPopular:pagina success:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
+    [[TMDbService defaultService]fetchPopular:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
         self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResults];
     } error:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Erro");

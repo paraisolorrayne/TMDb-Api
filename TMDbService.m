@@ -20,6 +20,7 @@ static NSString *const kTMDbSearchParamQueryKey = @"query";
 static NSString *const kTMDbSearchResultsKey = @"results";
 static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 
+
 @interface TMDbService ()
 @property (strong, nonatomic) AFHTTPSessionManager *manager;
 @end
@@ -38,7 +39,7 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
     if (self = [super init]) {
         self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString: kUrlBase] sessionConfiguration:nil];
         self.manager.requestSerializer = [AFJSONRequestSerializer new];
-        [_manager.requestSerializer setTimeoutInterval:45];
+        [_manager.requestSerializer setTimeoutInterval:60];
         self.manager.responseSerializer = [AFJSONResponseSerializer new];
     }
     return self;
@@ -49,7 +50,6 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
     NSDictionary *params = @{@"results": query ?: NSNull.null};
     [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
         NSLog(@"%@", params);
-        //results similar ao Search da OMDB na qual identifica onde começa a resposta do array de json
         NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSLog(@"%@", response);
         NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
@@ -62,12 +62,9 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 
 }
 
--(void)fetchPopular:(NSString *)page success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
-    NSString *completeUrl = [NSString stringWithFormat:@"%@%@%@%@%@", kUrlBase, kSearchMoviePopular, page, kLanguageBR, kApiKey];
-    NSDictionary *params = @{@"results": page ?: NSNull.null};
+-(void)fetchPopular:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
+    NSString *completeUrl = [NSString stringWithFormat:@"%@%@?1%@%@", kUrlBase, kSearchMoviePopular, kLanguageBR, kApiKey];
     [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
-        NSLog(@"%@", params);
-        //results similar ao Search da OMDB na qual identifica onde começa a resposta do array de json
         NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSLog(@"%@", response);
         NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
@@ -77,8 +74,37 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
         }
         success(movies);
     } failure:error];
+}
 
+-(void)captureGenreId:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
+    NSString *completeUrl = [NSString stringWithFormat:@"%@/genre/movie/list?%@&language=%@", kUrlBase, kApiKey, kLanguageBR];
+    [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
+        NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
+        NSLog(@"%@", response);
+        NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
+        for (NSDictionary *json in jsons) {
+            MoviePropertyObject *movie = [[MoviePropertyObject alloc] initWithData:json];
+            [movies addObject:movie];
+        }
+        success(movies);
+    } failure:error];
     
+}
+
+-(void)fetchGenre:(NSString *)idGenre success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
+    NSString *completeUrl = [NSString stringWithFormat:@"%@/discover/movie?%@&with_genres=%@", kUrlBase, kApiKey, idGenre];
+    NSDictionary *params = @{@"results": idGenre ?: NSNull.null};
+    [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
+        NSLog(@"%@", params);
+        NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
+        NSLog(@"%@", response);
+        NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
+        for (NSDictionary *json in jsons) {
+            MoviePropertyObject *movie = [[MoviePropertyObject alloc] initWithData:json];
+            [movies addObject:movie];
+        }
+        success(movies);
+    } failure:error];
 }
 
 

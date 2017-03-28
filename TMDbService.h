@@ -13,5 +13,5 @@
 @interface TMDbService : NSObject
 + (instancetype)defaultService;
 - (void)fetchMovies:(NSString *)query success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error;
--(void)fetchPopular:(NSString *)page success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error;
+-(void)fetchPopular:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error;
 @end

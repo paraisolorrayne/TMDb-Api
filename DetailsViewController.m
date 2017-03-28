@@ -25,7 +25,7 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     _overviewDesc.text = self.movieDetail.overview;
     _titleDesc.text = self.movieDetail.original_title;
     
-    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movieDetail.poster_pathUrl];
+    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movieDetail.poster_path];
     NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
     [_posterFilm setImageWithURL:posterUrlComplete];
     

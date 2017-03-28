@@ -26,7 +26,6 @@
 
 //TMDB
 @property (strong, nonatomic) NSString *poster_path;
-@property (strong, nonatomic) NSURL *poster_pathUrl;
 @property (strong, nonatomic) NSString *overview; //equals plot
 @property (strong, nonatomic) NSString *original_title;
 @property (strong, nonatomic) NSString *tmdbID;

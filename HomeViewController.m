@@ -7,24 +7,30 @@
 //
 
 #import "HomeViewController.h"
-#import "TMDbService.h"
-#import "MovieCollectionViewCell.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
-#import "DetailsViewController.h"
 
 static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
-@interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, iCarouselDataSource, iCarouselDelegate>
+
 @property (strong, nonatomic) NSString *movieName;
+
 @end
 
 @implementation HomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
     [self searchPopular];
-    
-    
+    self.carousel.type = iCarouselTypeRotary;
+    self.carousel.dataSource = self;
+    self.carousel.delegate = self;
+    self.carousel.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:_carousel];
+    [self.carousel reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,65 +38,80 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)selectSegment:(id)sender {
-    switch (self.segmentedControlOption.selectedSegmentIndex) {
-        case 0:
-            //aba favoritos exibe os filmes salvos
-            self.popularLabel.text =@"Segment 1 selected.";
-            break;
-        case 1:
-            //aba lançamentos exibe os filmes do ano
-            self.popularLabel.text =@"Segment 2 selected.";
-            break;
-        case 2:
-            //aba gêneros exibe os filmes por gênero
-            self.popularLabel.text = @"Segment 3 selected.";;
-            break;
-        default:
-            break;
-    }
-}
 
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     //abre teclado
     [_searchBar becomeFirstResponder];
     [self connectInternet];
+    
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
     return YES;
 }
-
+-(NSString*)searchString: editString {
+    NSString *str = [_searchBar.text stringByReplacingOccurrencesOfString:@" "
+                                                              withString:@"+"];
+    NSString *newString = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSData *data = [newString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    _movieName = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    return _movieName;
+}
 
 - (void)setupSearchBar {
-    self.navigationItem.titleView = _searchBar;
-    _movieName = [_searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     //abre o teclado
     [_searchBar becomeFirstResponder];
     [self connectInternet];
 }
 
 -(void)connectInternet {
+    [self searchString:_movieName];
     NSURL *scrpitURL = [NSURL URLWithString:@"https://www.google.com"];
     NSData *data = [NSData dataWithContentsOfURL:scrpitURL];
     if (data) {
-        _movieName = [_searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        //esconde teclado
+
         [_searchBar resignFirstResponder];
        
-        if ([_searchBar.text  isEqual: @""]) {
-           //vazio
+        if ([_movieName isEqualToString:@""]) {
+            UIAlertController * view=   [UIAlertController
+                                         alertControllerWithTitle:@"O nome do filme não foi digitado!"
+                                         message:@"Digite um filme"
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action) {
+                                     [view dismissViewControllerAnimated:YES completion:^{
+                                     }];
+                                 }];
+            [view addAction:ok];
+            [self presentViewController:view animated:YES completion:nil];
+        } else if ([_movieName length] == 1 || [_movieName length] == 2) {
+            UIAlertController * view=   [UIAlertController
+                                         alertControllerWithTitle:@"Busca inválida"
+                                         message:@"Digite o nome de um filme com mais de 3 caracteres!"
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:@"OK"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action) {
+                                     [view dismissViewControllerAnimated:YES completion:^{
+                                     }];
+                                 }];
+            [view addAction:ok];
+            [self presentViewController:view animated:YES completion:nil];
+            NSLog(@"Digite uma busca com mais de 3 caracteres");
+        } else {
+            
+            [self searchMovie];
         }
-        _movieName = [_searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self searchMovie];
-        
     }
     else {
         UIAlertController * view=   [UIAlertController
                                      alertControllerWithTitle:@""
-                                     message:@"Sem conexão com a Internet!"
-                                     preferredStyle:UIAlertControllerStyleActionSheet];
+                                     message:[NSString stringWithFormat:@"Sem conexão com a Internet!@"]
+                                     preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* ok = [UIAlertAction
                              actionWithTitle:@"OK"
                              style:UIAlertActionStyleDefault
@@ -103,33 +124,101 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
         [view addAction:ok];
         [self presentViewController:view animated:YES completion:nil];
     }
-
     
 }
 
 -(void)searchMovie {
+    _load.hidden = NO;
+    [_load startAnimating];
     [[TMDbService defaultService]fetchMovies:_movieName success:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
         self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResults];
+        [_load stopAnimating];
+        _load.hidesWhenStopped = TRUE;
+        [self.carousel reloadData];
     } error:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Erro");
     } ];
-    
 }
 
 -(void)searchPopular {
-    NSString *pagina = @"1";
-    [[TMDbService defaultService]fetchPopular:pagina success:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
+    _loading.hidden = NO;
+    [_loading startAnimating];
+    [[TMDbService defaultService]fetchPopular:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
+        
         self.movieCollectionResultsPop = [(self.movieCollectionResultsPop ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
         [self.popularCollectionView reloadData];
+        [_loading stopAnimating];
+        _loading.hidesWhenStopped = TRUE;
     } error:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Erro");
     } ];
 }
 
-- (IBAction)searchMovie:(id)sender {
-    [self connectInternet];
+-(void)selectGenre {
+    self.carousel.backgroundColor = [UIColor cyanColor];
 }
 
+-(void)searchGenre {
+    [self selectGenre];
+    NSLog(@"%@", _movie);
+}
+
+#pragma mark - Actions
+
+- (IBAction)searchMovie:(id)sender {
+    [self connectInternet];
+    [_searchBar resignFirstResponder];
+}
+
+- (IBAction)selectSegment:(id)sender {
+    switch (self.segmentedControlOption.selectedSegmentIndex) {
+        case 0:
+            //aba favoritos exibe os filmes salvos
+            self.carousel.backgroundColor = [UIColor whiteColor];
+            break;
+        case 1:
+            //aba lançamentos exibe os filmes do ano
+            self.carousel.backgroundColor = [UIColor blueColor];
+            break;
+        case 2:
+            //aba gêneros exibe os filmes por gênero
+            [self searchGenre];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - iCarouselDataSource
+
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
+    return self.movieCollectionResults.count;
+}
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view {
+    CarouselFilmView *cellView = [CarouselFilmView instanceFromXIB];
+    cellView.frame = CGRectMake(0, 0, carousel.bounds.size.width*0.8, 200);
+    _movie = self.movieCollectionResults[index];
+    cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
+    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
+    NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
+   
+    [cellView.posterFilm cancelImageDownloadTask];
+    cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
+    if (!_movie.posterMovieURL) {
+        [cellView.posterFilm setImageWithURL:posterUrlComplete];
+    }
+    return cellView;
+}
+
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(__unused NSInteger)index {
+    NSLog(@"Segue detalhes");
+    NSLog(@" segue para a tela de detalhes do filme");
+    DetailsViewController *movieDetailView = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"Details"];
+    MoviePropertyObject *movie = self.movieCollectionResults [index];
+    movieDetailView.movieDetail = movie;
+    [self.navigationController pushViewController:movieDetailView animated:YES];
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -140,12 +229,10 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"popular" forIndexPath:indexPath];
-    
     MoviePropertyObject *movie = self.movieCollectionResultsPop [indexPath.row];
-    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, movie.poster_pathUrl];
+    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, movie.poster_path];
     NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
     [cell.posterCollection setImageWithURL:posterUrlComplete];
-    
     return cell;
     
 }
@@ -156,7 +243,6 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     MoviePropertyObject *movie = self.movieCollectionResultsPop [indexPath.row];
     movieDetailView.movieDetail = movie;
     [self.navigationController pushViewController:movieDetailView animated:YES];
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
