@@ -18,11 +18,17 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
 @implementation HomeViewController
 
+BOOL selectedSegmentA;
+BOOL selectedSegmentB;
+BOOL selectedSegmentC;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.carousel.backgroundColor = [UIColor blackColor];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    _load.hidden = NO;
     [self searchPopular];
     self.carousel.type = iCarouselTypeRotary;
     self.carousel.dataSource = self;
@@ -70,9 +76,7 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     NSURL *scrpitURL = [NSURL URLWithString:@"https://www.google.com"];
     NSData *data = [NSData dataWithContentsOfURL:scrpitURL];
     if (data) {
-
         [_searchBar resignFirstResponder];
-       
         if ([_movieName isEqualToString:@""]) {
             UIAlertController * view=   [UIAlertController
                                          alertControllerWithTitle:@"O nome do filme não foi digitado!"
@@ -103,7 +107,6 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
             [self presentViewController:view animated:YES completion:nil];
             NSLog(@"Digite uma busca com mais de 3 caracteres");
         } else {
-            
             [self searchMovie];
         }
     }
@@ -128,7 +131,6 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 }
 
 -(void)searchMovie {
-    _load.hidden = NO;
     [_load startAnimating];
     [[TMDbService defaultService]fetchMovies:_movieName success:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
         self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResults];
@@ -139,12 +141,19 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
         NSLog(@"Erro");
     } ];
 }
+-(void)searchTV {
+    [[TMDbService defaultService]fetchTV:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
+        self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
+        [self.carousel reloadData];
+    } error:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Erro");
+    } ];
+}
 
 -(void)searchPopular {
     _loading.hidden = NO;
     [_loading startAnimating];
     [[TMDbService defaultService]fetchPopular:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
-        
         self.movieCollectionResultsPop = [(self.movieCollectionResultsPop ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
         [self.popularCollectionView reloadData];
         [_loading stopAnimating];
@@ -154,18 +163,35 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     } ];
 }
 
--(void)selectGenre {
-    self.carousel.backgroundColor = [UIColor cyanColor];
+-(NSString *)selectGenre {
+    [[TMDbService defaultService]captureGenreId:^(NSArray<MoviePropertyObject*> *movieCollectionGenreId) {
+        self.movieCollectionResultsPop = [(self.movieCollectionResultsPop ?: @[]) arrayByAddingObjectsFromArray:movieCollectionGenreId];
+        [_loading stopAnimating];
+        _loading.hidesWhenStopped = TRUE;
+    } error:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Erro");
+    } ];
+    return _movieCollectionResultsPop.firstObject.genreId;
 }
 
 -(void)searchGenre {
     [self selectGenre];
-    NSLog(@"%@", _movie);
+    [[TMDbService defaultService]fetchGenre:[self selectGenre] success:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
+        self.movieCollectionResultsPop = [(self.movieCollectionResultsPop ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
+        [self.popularCollectionView reloadData];
+        [_loading stopAnimating];
+        _loading.hidesWhenStopped = TRUE;
+    } error:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Erro");
+    } ];
+
 }
 
 #pragma mark - Actions
 
 - (IBAction)searchMovie:(id)sender {
+    
+    [self.carousel reloadData];
     [self connectInternet];
     [_searchBar resignFirstResponder];
 }
@@ -173,16 +199,21 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 - (IBAction)selectSegment:(id)sender {
     switch (self.segmentedControlOption.selectedSegmentIndex) {
         case 0:
+            selectedSegmentA  = TRUE;
             //aba favoritos exibe os filmes salvos
             self.carousel.backgroundColor = [UIColor whiteColor];
+            [self connectInternet];
             break;
         case 1:
-            //aba lançamentos exibe os filmes do ano
-            self.carousel.backgroundColor = [UIColor blueColor];
+            selectedSegmentB = TRUE;
+            //aba TV exibe os programas de TV
+            [self.carousel reloadData];
+            [self searchTV];
             break;
         case 2:
+            selectedSegmentC = TRUE;
             //aba gêneros exibe os filmes por gênero
-            [self searchGenre];
+            [self connectInternet];
             break;
         default:
             break;
@@ -199,7 +230,14 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     CarouselFilmView *cellView = [CarouselFilmView instanceFromXIB];
     cellView.frame = CGRectMake(0, 0, carousel.bounds.size.width*0.8, 200);
     _movie = self.movieCollectionResults[index];
-    cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
+    if (selectedSegmentB) {
+        //tv ok
+        cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_name];
+        selectedSegmentB = NO;
+    } else {
+        _movie = self.movieCollectionResults[index];
+        cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
+    }
     NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
     NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
    

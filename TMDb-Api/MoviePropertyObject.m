@@ -15,7 +15,7 @@
     
     if (self) {
         //OMDb
-        _titleMovie = jsonDataObject[@"Title"];
+        _titleMovie = jsonDataObject[@"title"];
         _yearMovie = jsonDataObject[@"Year"];
         _runtimeMovie = jsonDataObject [@"Runtime"];
         _genreMovie = jsonDataObject [@"Genre"];
@@ -32,10 +32,12 @@
         _poster_path = jsonDataObject[@"poster_path"];
         _overview = jsonDataObject[@"overview"];
         _original_title = jsonDataObject[@"original_title"];
+        _original_name = jsonDataObject[@"original_name"];
         _tmdbID = jsonDataObject[@"imdb_id"];
         _release_date = jsonDataObject[@"release_date"];
         _genre_ids = jsonDataObject[@"genre_ids"];
         _homepage = jsonDataObject[@"homepage"];
+        _genreId = jsonDataObject[@"id"];
         
     }
     

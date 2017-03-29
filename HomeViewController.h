@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *popularLabel;
 @property (strong, nonatomic) IBOutlet UICollectionView *popularCollectionView;
 @property (strong, nonatomic) NSArray <MoviePropertyObject *> *movieCollectionResultsPop;
+@property (strong, nonatomic) NSArray <MoviePropertyObject *> *movieCollectionResultsTV;
 @property (strong, nonatomic) NSArray <MoviePropertyObject *> *movieCollectionResults;
 @property (strong, nonatomic) MoviePropertyObject *movie;
 @property (strong, nonatomic) IBOutlet iCarousel *carousel;
