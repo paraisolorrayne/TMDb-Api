@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOl-Il-w3H">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOl-Il-w3H">
                     <rect key="frame" x="87.5" y="636.5" width="200" height="20.5"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
@@ -26,7 +26,7 @@
                     <size key="shadowOffset" width="0.0" height="0.0"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JVj-gA-Qeq">
-                    <rect key="frame" x="6" y="10" width="363" height="600"/>
+                    <rect key="frame" x="6" y="16" width="363" height="594"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -36,7 +36,7 @@
                 <constraint firstAttribute="bottom" secondItem="uOl-Il-w3H" secondAttribute="bottom" constant="10" id="GDM-1D-Ec5"/>
                 <constraint firstItem="JVj-gA-Qeq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="6" id="Suy-Ig-8sC"/>
                 <constraint firstAttribute="trailing" secondItem="JVj-gA-Qeq" secondAttribute="trailing" constant="6" id="WcN-Tx-7eQ"/>
-                <constraint firstItem="JVj-gA-Qeq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="wUf-xs-JRu"/>
+                <constraint firstItem="JVj-gA-Qeq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="wUf-xs-JRu"/>
             </constraints>
             <connections>
                 <outlet property="posterFilm" destination="JVj-gA-Qeq" id="ZY6-9h-OnC"/>

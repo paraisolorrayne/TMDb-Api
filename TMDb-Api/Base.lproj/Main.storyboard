@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -65,10 +66,10 @@
                                     <action selector="searchMovie:" destination="nKC-UQ-lU2" eventType="touchUpInside" id="bFs-fh-Xaw"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fm2-Ue-ZbM">
-                                <rect key="frame" x="0.0" y="365" width="320" height="200"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" ambiguous="YES" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fm2-Ue-ZbM">
+                                <rect key="frame" x="0.0" y="385" width="320" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="IPE-Nh-hIU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="180" id="IPE-Nh-hIU"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="TLG-MN-no6">
                                     <size key="itemSize" width="95" height="95"/>
@@ -77,7 +78,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="0xh-Ri-2u9">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <cells>
@@ -88,12 +89,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xwF-bf-Hpq">
-                                                    <rect key="frame" x="8" y="5" width="79" height="90"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xwF-bf-Hpq">
+                                                    <rect key="frame" x="8" y="5" width="90" height="90"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" priority="999" constant="90" id="GBR-GW-BOy"/>
+                                                        <constraint firstAttribute="height" priority="999" constant="90" id="Ghw-Pz-Gk4"/>
+                                                    </constraints>
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="xwF-bf-Hpq" secondAttribute="bottom" id="KBj-j9-CYJ"/>
+                                            <constraint firstItem="xwF-bf-Hpq" firstAttribute="leading" secondItem="1wM-aw-BBL" secondAttribute="leadingMargin" id="SOS-GR-BfL"/>
+                                        </constraints>
                                         <size key="customSize" width="95" height="95"/>
                                         <connections>
                                             <outlet property="posterCollection" destination="xwF-bf-Hpq" id="Yqd-XB-pI8"/>
@@ -105,15 +113,15 @@
                                     <outlet property="delegate" destination="nKC-UQ-lU2" id="8Ec-VW-7jN"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imj-aq-fbS" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="176" width="320" height="150"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="imj-aq-fbS" customClass="iCarousel">
+                                <rect key="frame" x="0.0" y="176" width="320" height="170"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="C2e-85-x5B"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="170" id="C2e-85-x5B"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Populares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z47-y0-vit">
-                                <rect key="frame" x="0.0" y="346" width="320" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Populares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z47-y0-vit">
+                                <rect key="frame" x="0.0" y="366" width="320" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="TXd-Ng-IDC"/>
                                 </constraints>
@@ -121,20 +129,16 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lvM-OI-rnP">
-                                <rect key="frame" x="142" y="265.5" width="37" height="37"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Fm2-Ue-ZbM" firstAttribute="leading" secondItem="5af-U6-UBS" secondAttribute="leading" id="13F-Yt-4bt"/>
                             <constraint firstAttribute="trailing" secondItem="Fm2-Ue-ZbM" secondAttribute="trailing" id="555-Kt-k7R"/>
-                            <constraint firstItem="Z47-y0-vit" firstAttribute="top" secondItem="imj-aq-fbS" secondAttribute="bottom" constant="20" id="8Se-ib-y8j"/>
+                            <constraint firstItem="Z47-y0-vit" firstAttribute="top" relation="greaterThanOrEqual" secondItem="imj-aq-fbS" secondAttribute="bottom" priority="999" constant="20" id="8Se-ib-y8j"/>
                             <constraint firstItem="JN4-hU-M7d" firstAttribute="top" secondItem="Pfq-dx-pDS" secondAttribute="bottom" id="D80-xT-Bza"/>
                             <constraint firstAttribute="trailing" secondItem="Z47-y0-vit" secondAttribute="trailing" id="Dgt-sk-pUB"/>
                             <constraint firstItem="dvs-at-TzD" firstAttribute="top" secondItem="CaD-an-vUo" secondAttribute="bottom" constant="15" id="Dh4-mP-tSQ"/>
                             <constraint firstItem="imj-aq-fbS" firstAttribute="leading" secondItem="5af-U6-UBS" secondAttribute="leading" id="Vxp-ZN-NCF"/>
-                            <constraint firstItem="lvM-OI-rnP" firstAttribute="centerX" secondItem="5af-U6-UBS" secondAttribute="centerX" id="WWr-Dc-sEs"/>
                             <constraint firstItem="imj-aq-fbS" firstAttribute="top" secondItem="dvs-at-TzD" secondAttribute="bottom" constant="25" id="YOg-Ss-Xsh"/>
                             <constraint firstItem="CaD-an-vUo" firstAttribute="top" secondItem="Pfq-dx-pDS" secondAttribute="bottom" id="bhp-Kl-BUi"/>
                             <constraint firstItem="JN4-hU-M7d" firstAttribute="leading" secondItem="5af-U6-UBS" secondAttribute="leading" id="cKq-kV-5VF"/>
@@ -145,7 +149,6 @@
                             <constraint firstAttribute="trailing" secondItem="CaD-an-vUo" secondAttribute="trailing" id="nab-T1-Yc3"/>
                             <constraint firstAttribute="trailing" secondItem="imj-aq-fbS" secondAttribute="trailing" id="o8F-fz-A0y"/>
                             <constraint firstItem="JN4-hU-M7d" firstAttribute="leading" secondItem="5af-U6-UBS" secondAttribute="leading" id="ogL-xc-hec"/>
-                            <constraint firstItem="lvM-OI-rnP" firstAttribute="centerY" secondItem="5af-U6-UBS" secondAttribute="centerY" id="pvZ-Vn-RFQ"/>
                             <constraint firstItem="CaD-an-vUo" firstAttribute="bottom" secondItem="JN4-hU-M7d" secondAttribute="bottom" id="v8Z-ee-CEj"/>
                             <constraint firstItem="Fm2-Ue-ZbM" firstAttribute="top" secondItem="Z47-y0-vit" secondAttribute="bottom" constant="3" id="w0J-me-LkY"/>
                             <constraint firstItem="dvs-at-TzD" firstAttribute="centerX" secondItem="5af-U6-UBS" secondAttribute="centerX" id="wOw-yw-IbO"/>
@@ -158,7 +161,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="carousel" destination="imj-aq-fbS" id="xkB-yC-NEU"/>
-                        <outlet property="load" destination="lvM-OI-rnP" id="Sw5-1o-1Ng"/>
                         <outlet property="loading" destination="0xh-Ri-2u9" id="o9b-8u-8xS"/>
                         <outlet property="popularCollectionView" destination="Fm2-Ue-ZbM" id="QX7-S7-H6J"/>
                         <outlet property="popularLabel" destination="Z47-y0-vit" id="UIu-ae-m4I"/>

@@ -7,13 +7,15 @@
 //
 
 #import "HomeViewController.h"
+#import "MovieMO.h"
+#import "AppDelegate.h"
 
 static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
 @interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (strong, nonatomic) NSString *movieName;
-
+@property (strong, nonatomic) NSArray <MovieMO *> *movies;
 @end
 
 @implementation HomeViewController
@@ -24,7 +26,17 @@ BOOL selectedSegmentC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.carousel.backgroundColor = [UIColor blackColor];
+    AppDelegate *appDelegate = (AppDelegate *) UIApplication.sharedApplication.delegate;
+    NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+    NSError *error = nil;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Movie"];
+    self.movies = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (!self.movies) {
+        NSLog(@"Error fetching Movie objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -201,8 +213,7 @@ BOOL selectedSegmentC;
         case 0:
             selectedSegmentA  = TRUE;
             //aba favoritos exibe os filmes salvos
-            self.carousel.backgroundColor = [UIColor whiteColor];
-            [self connectInternet];
+            [self.carousel reloadData];
             break;
         case 1:
             selectedSegmentB = TRUE;
@@ -223,35 +234,51 @@ BOOL selectedSegmentC;
 #pragma mark - iCarouselDataSource
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
-    return self.movieCollectionResults.count;
+    if (selectedSegmentA ) {
+        return self.movies.count;
+    } else return self.movieCollectionResults.count;
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view {
     CarouselFilmView *cellView = [CarouselFilmView instanceFromXIB];
     cellView.frame = CGRectMake(0, 0, carousel.bounds.size.width*0.8, 200);
-    _movie = self.movieCollectionResults[index];
-    if (selectedSegmentB) {
-        //tv ok
-        cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_name];
-        selectedSegmentB = NO;
-    } else {
+  /*
+    if (selectedSegmentA) {
+        MovieMO *movie = self.movies [index];
+        if (selectedSegmentB) {
+            cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", movie.original_name];
+            selectedSegmentB = NO;
+        } else {
+            cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", movie.original_title];
+        }
+        NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, movie.poster_path];
+        NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
+        [cellView.posterFilm cancelImageDownloadTask];
+        cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
+        if (!_movie.posterMovieURL) {
+            [cellView.posterFilm setImageWithURL:posterUrlComplete];
+        }
+    } else {*/
         _movie = self.movieCollectionResults[index];
-        cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
-    }
-    NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
-    NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
-   
-    [cellView.posterFilm cancelImageDownloadTask];
-    cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
-    if (!_movie.posterMovieURL) {
-        [cellView.posterFilm setImageWithURL:posterUrlComplete];
-    }
+        if (selectedSegmentB) {
+            cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_name];
+            selectedSegmentB = NO;
+        } else {
+            cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
+        }
+        NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
+        NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
+        
+        [cellView.posterFilm cancelImageDownloadTask];
+        cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
+        if (!_movie.posterMovieURL) {
+            [cellView.posterFilm setImageWithURL:posterUrlComplete];
+        }
+    //}
     return cellView;
 }
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(__unused NSInteger)index {
-    NSLog(@"Segue detalhes");
-    NSLog(@" segue para a tela de detalhes do filme");
     DetailsViewController *movieDetailView = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"Details"];
     MoviePropertyObject *movie = self.movieCollectionResults [index];
     movieDetailView.movieDetail = movie;
@@ -281,6 +308,10 @@ BOOL selectedSegmentC;
     MoviePropertyObject *movie = self.movieCollectionResultsPop [indexPath.row];
     movieDetailView.movieDetail = movie;
     [self.navigationController pushViewController:movieDetailView animated:YES];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

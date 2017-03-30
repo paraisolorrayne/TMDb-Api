@@ -8,10 +8,14 @@
 
 #import "DetailsViewController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "AppDelegate.h"
+#import <CoreData/CoreData.h>
+#import "MovieMO.h"
+
 static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 @interface DetailsViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView *posterFilm;
-
+@property (strong, nonatomic) MovieMO *movie;
 @end
 
 @implementation DetailsViewController
@@ -73,6 +77,19 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 }
 
 -(void) saveInCoreData {
+    AppDelegate *appDelegate = (AppDelegate *) UIApplication.sharedApplication.delegate;
+    NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+    _movie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie" inManagedObjectContext:context];
+    _movie.original_title = _movieDetail.original_title;
+    _movie.original_name = _movieDetail.original_name;
+    _movie.overview = _movieDetail.overview;
+    _movie.homepage = _movieDetail.homepage;
+    NSError *error = nil;
+    [context save:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+
     
 }
 
@@ -109,7 +126,7 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 }
 
 
-/*
+/* 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

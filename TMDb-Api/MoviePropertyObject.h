@@ -29,7 +29,6 @@
 @property (strong, nonatomic) NSString *overview; //equals plot
 @property (strong, nonatomic) NSString *original_title;
 @property (strong, nonatomic) NSString *original_name;
-@property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *tmdbID;
 @property (strong, nonatomic) NSString *release_date;
 @property (strong, nonatomic) NSString *genre_ids;
