@@ -14,6 +14,7 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
 @interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, iCarouselDataSource, iCarouselDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *menuView;
 @property (strong, nonatomic) NSString *movieName;
 @property (strong, nonatomic) NSArray <MovieMO *> *movies;
 @end
@@ -36,6 +37,7 @@ BOOL selectedSegmentC;
         NSLog(@"Error fetching Movie objects: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
     }
+    _menuView.hidden = YES;
 
 }
 
@@ -56,6 +58,9 @@ BOOL selectedSegmentC;
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)openSettings:(id)sender {
+
+}
 
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -144,6 +149,7 @@ BOOL selectedSegmentC;
 
 -(void)searchMovie {
     [_load startAnimating];
+    [_searchBar resignFirstResponder];
     [[TMDbService defaultService]fetchMovies:_movieName success:^(NSArray<MoviePropertyObject*> *movieCollectionResults) {
         self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResults];
         [_load stopAnimating];
@@ -212,19 +218,18 @@ BOOL selectedSegmentC;
     switch (self.segmentedControlOption.selectedSegmentIndex) {
         case 0:
             selectedSegmentA  = TRUE;
-            //aba favoritos exibe os filmes salvos
+            [self.carousel setContentOffset:CGSizeZero];
             [self.carousel reloadData];
             break;
         case 1:
             selectedSegmentB = TRUE;
-            //aba TV exibe os programas de TV
+            [self.carousel setContentOffset:CGSizeZero];
             [self.carousel reloadData];
             [self searchTV];
             break;
         case 2:
             selectedSegmentC = TRUE;
-            //aba gêneros exibe os filmes por gênero
-            [self connectInternet];
+            [self.carousel setContentOffset:CGSizeZero];
             break;
         default:
             break;
@@ -242,7 +247,6 @@ BOOL selectedSegmentC;
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(nullable UIView *)view {
     CarouselFilmView *cellView = [CarouselFilmView instanceFromXIB];
     cellView.frame = CGRectMake(0, 0, carousel.bounds.size.width*0.8, 200);
-  /*
     if (selectedSegmentA) {
         MovieMO *movie = self.movies [index];
         if (selectedSegmentB) {
@@ -258,7 +262,8 @@ BOOL selectedSegmentC;
         if (!_movie.posterMovieURL) {
             [cellView.posterFilm setImageWithURL:posterUrlComplete];
         }
-    } else {*/
+        selectedSegmentA = NO;
+    } else {
         _movie = self.movieCollectionResults[index];
         if (selectedSegmentB) {
             cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_name];
@@ -274,7 +279,7 @@ BOOL selectedSegmentC;
         if (!_movie.posterMovieURL) {
             [cellView.posterFilm setImageWithURL:posterUrlComplete];
         }
-    //}
+    }
     return cellView;
 }
 
@@ -283,6 +288,11 @@ BOOL selectedSegmentC;
     MoviePropertyObject *movie = self.movieCollectionResults [index];
     movieDetailView.movieDetail = movie;
     [self.navigationController pushViewController:movieDetailView animated:YES];
+}
+
+- (void)removeItemAtIndex:(NSInteger)index animated:(BOOL)animated {
+    index = _carousel.currentItemIndex;
+    [_carousel removeItemAtIndex:index animated:YES];
 }
 
 #pragma mark <UICollectionViewDataSource>

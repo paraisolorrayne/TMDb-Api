@@ -15,8 +15,10 @@ static NSString *const kSearchMovie = @"search/movie?";
 static NSString *const kSearchTV = @"search/tv";
 static NSString *const kSearchMoviePopular = @"movie/popular?";
 static NSString *const kSearchTVPopular = @"discover/tv?";
-static NSString *const kLanguageUS = @"&language=en-US&";
-static NSString *const kLanguageBR = @"&language=pt-BR&";
+static NSString *const kLanguageUS = @"&language=en-US&"; //ing us
+static NSString *const kLanguageBR = @"&language=pt-BR&"; //port br
+static NSString *const kLanguagePR = @"&language=pt-BR&"; //port portugal
+static NSString *const kLanguageFR = @"&language=fr-FR&"; //frances
 static NSString *const kTMDbMovieSearchPath = @"search/movie";
 static NSString *const kTMDbSearchParamQueryKey = @"query";
 static NSString *const kTMDbSearchResultsKey = @"results";
@@ -46,6 +48,7 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
     }
     return self;
 }
+
 
 - (void)fetchMovies:(NSString *)query success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
      NSString *completeUrl = [NSString stringWithFormat:@"%@%@%@&query=%@", kUrlBase, kSearchMovie, kApiKey, query];
@@ -79,7 +82,7 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 }
 
 - (void)fetchTV:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
-    NSString *completeUrl = [NSString stringWithFormat:@"%@%@%@%@sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", kUrlBase, kSearchTVPopular, kApiKey, kLanguageBR];
+    NSString *completeUrl = [NSString stringWithFormat:@"%@%@%@%@&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false", kUrlBase, kSearchTVPopular, kApiKey, kLanguageBR];
     [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
         NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSLog(@"%@", response);
