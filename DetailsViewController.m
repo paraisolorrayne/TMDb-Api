@@ -22,30 +22,22 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   // _titleLabel.layer.borderColor = [UIColor whiteColor].CGColor;
-   // _titleLabel.layer.borderWidth = 1.2;
-    
-    
     _overviewDesc.text = self.movieDetail.overview;
     _titleDesc.text = self.movieDetail.original_title;
-    
     NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movieDetail.poster_path];
     NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
     [_posterFilm setImageWithURL:posterUrlComplete];
-    
-     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)openTrailer:(id)sender {
     
     //url request to trailer
     /*
      api.themoviedb.org/3/movie/<movieid>/videos?api_key=<apikey>
-     
      essa url retorna um json que contem:
      "results": [{
      "id": "58cfc8499251415a61037481",
@@ -56,11 +48,8 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
      "site": "YouTube",
      "size": 1080,
      "type": "Trailer"
-     
      pegar o campo key e setar na variavel trailer
-     
      */
-    
     NSString *trailer = @"RH3OxVFvTeg";
     
     NSURL *linkToAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"youtube://watch/%@",trailer]];
@@ -79,6 +68,32 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 -(void) saveInCoreData {
     AppDelegate *appDelegate = (AppDelegate *) UIApplication.sharedApplication.delegate;
     NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie"
+                                              inManagedObjectContext:context];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"original_title"
+                                                                   ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    [request setSortDescriptors:sortDescriptors];
+    
+    NSError *Fetcherror;
+    NSMutableArray *mutableFetchResults = [[context executeFetchRequest:request error:&Fetcherror] mutableCopy];
+    
+    if (!mutableFetchResults) {
+        NSLog(@"error handling code");
+        // error handling code.
+    }
+    
+    if ([[mutableFetchResults valueForKey:@"original_title"] containsObject:_movieDetail.original_title]) {
+        //notify duplicates
+        return;
+    }
+    else {
+        //write your code to add data
     _movie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie" inManagedObjectContext:context];
     _movie.original_title = _movieDetail.original_title;
     _movie.original_name = _movieDetail.original_name;
@@ -86,8 +101,9 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
     _movie.homepage = _movieDetail.homepage;
     NSError *error = nil;
     [context save:&error];
-    if (error) {
+        if (error) {
         NSLog(@"%@", error);
+        }
     }
 
     
@@ -96,18 +112,11 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 - (IBAction)saveMovie:(id)sender {
     [self saveInCoreData];
     UIAlertController * view=   [UIAlertController
-                                 alertControllerWithTitle:@"Movie save"
-                                 message:@"Deseja salvar mais filmes?"
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
+                                 alertControllerWithTitle:@"Success"
+                                 message:@"Movie save"
+                                 preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* ok = [UIAlertAction
-                         actionWithTitle:@"Yes"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             [self.navigationController popViewControllerAnimated:YES];
-                         }];
-    UIAlertAction* cancel = [UIAlertAction
-                             actionWithTitle:@"No"
+                             actionWithTitle:@"Ok"
                              style:UIAlertActionStyleDefault
                              handler:^(UIAlertAction * action)
                              {
@@ -121,7 +130,6 @@ static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
                                  
                              }];
     [view addAction:ok];
-    [view addAction:cancel];
     [self presentViewController:view animated:YES completion:nil];
 }
 

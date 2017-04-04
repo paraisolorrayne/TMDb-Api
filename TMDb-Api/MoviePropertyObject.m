@@ -9,24 +9,15 @@
 #import "MoviePropertyObject.h"
 
 @implementation MoviePropertyObject
-- (instancetype)initWithData:(NSDictionary *)jsonDataObject
-{
+- (instancetype)initWithData:(NSDictionary *)jsonDataObject {
     self = [super init];
-    
     if (self) {
         //OMDb
-        _titleMovie = jsonDataObject[@"title"];
-        _yearMovie = jsonDataObject[@"Year"];
         _runtimeMovie = jsonDataObject [@"Runtime"];
-        _genreMovie = jsonDataObject [@"Genre"];
         _directorMovie = jsonDataObject[@"Director"];
         _actorsMovie = jsonDataObject [@"Actors"];
-        _plotMovie = jsonDataObject [@"Plot"];
-        _typeValue = jsonDataObject [@"Type"];
-        _imdbID = jsonDataObject [@"imdbID"];
-        _totalResults = jsonDataObject [@"totalResults"];
         _posterImgMovie = jsonDataObject [@"Poster"];
-        _posterMovieURL = [NSURL URLWithString:_posterImgMovie];
+        _posterMovieUrl = [NSURL URLWithString:_posterImgMovie];
         
         //TMDb
         _poster_path = jsonDataObject[@"poster_path"];
@@ -40,7 +31,6 @@
         _genreId = jsonDataObject[@"id"];
         
     }
-    
     return self;
 }
 @end

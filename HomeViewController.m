@@ -13,7 +13,6 @@
 static NSString *const kTMDbPosterPath = @"http://image.tmdb.org/t/p/w185/";
 
 @interface HomeViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, iCarouselDataSource, iCarouselDelegate>
-
 @property (strong, nonatomic) IBOutlet UIView *menuView;
 @property (strong, nonatomic) NSString *movieName;
 @property (strong, nonatomic) NSArray <MovieMO *> *movies;
@@ -32,13 +31,11 @@ BOOL selectedSegmentC;
     NSError *error = nil;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Movie"];
     self.movies = [context executeFetchRequest:fetchRequest error:&error];
-    
     if (!self.movies) {
         NSLog(@"Error fetching Movie objects: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
     }
     _menuView.hidden = YES;
-
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -55,7 +52,6 @@ BOOL selectedSegmentC;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)openSettings:(id)sender {
@@ -67,7 +63,6 @@ BOOL selectedSegmentC;
     //abre teclado
     [_searchBar becomeFirstResponder];
     [self connectInternet];
-    
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
@@ -83,7 +78,6 @@ BOOL selectedSegmentC;
 }
 
 - (void)setupSearchBar {
-    //abre o teclado
     [_searchBar becomeFirstResponder];
     [self connectInternet];
 }
@@ -124,6 +118,7 @@ BOOL selectedSegmentC;
             [self presentViewController:view animated:YES completion:nil];
             NSLog(@"Digite uma busca com mais de 3 caracteres");
         } else {
+            [self.carousel reloadData];
             [self searchMovie];
         }
     }
@@ -144,7 +139,6 @@ BOOL selectedSegmentC;
         [view addAction:ok];
         [self presentViewController:view animated:YES completion:nil];
     }
-    
 }
 
 -(void)searchMovie {
@@ -159,7 +153,9 @@ BOOL selectedSegmentC;
         NSLog(@"Erro");
     } ];
 }
+
 -(void)searchTV {
+    [self.carousel reloadData];
     [[TMDbService defaultService]fetchTV:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
         self.movieCollectionResults = [(self.movieCollectionResults ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
         [self.carousel reloadData];
@@ -190,11 +186,12 @@ BOOL selectedSegmentC;
         NSLog(@"Erro");
     } ];
     return _movieCollectionResultsPop.firstObject.genreId;
+    //error: property 'genreId' not found on object of type 'id _Nullable'
 }
 
 -(void)searchGenre {
-    [self selectGenre];
-    [[TMDbService defaultService]fetchGenre:[self selectGenre] success:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
+    NSString *genreid = @"28";
+    [[TMDbService defaultService]fetchGenre:genreid success:^(NSArray<MoviePropertyObject*> *movieCollectionResultsPopular) {
         self.movieCollectionResultsPop = [(self.movieCollectionResultsPop ?: @[]) arrayByAddingObjectsFromArray:movieCollectionResultsPopular];
         [self.popularCollectionView reloadData];
         [_loading stopAnimating];
@@ -208,7 +205,6 @@ BOOL selectedSegmentC;
 #pragma mark - Actions
 
 - (IBAction)searchMovie:(id)sender {
-    
     [self.carousel reloadData];
     [self connectInternet];
     [_searchBar resignFirstResponder];
@@ -230,6 +226,8 @@ BOOL selectedSegmentC;
         case 2:
             selectedSegmentC = TRUE;
             [self.carousel setContentOffset:CGSizeZero];
+            [self.carousel reloadData];
+            [self searchGenre];
             break;
         default:
             break;
@@ -249,7 +247,7 @@ BOOL selectedSegmentC;
     cellView.frame = CGRectMake(0, 0, carousel.bounds.size.width*0.8, 200);
     if (selectedSegmentA) {
         MovieMO *movie = self.movies [index];
-        if (selectedSegmentB) {
+        if (selectedSegmentC) {
             cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", movie.original_name];
             selectedSegmentB = NO;
         } else {
@@ -259,7 +257,7 @@ BOOL selectedSegmentC;
         NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
         [cellView.posterFilm cancelImageDownloadTask];
         cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
-        if (!_movie.posterMovieURL) {
+        if (!_movie.posterMovieUrl) {
             [cellView.posterFilm setImageWithURL:posterUrlComplete];
         }
         selectedSegmentA = NO;
@@ -271,12 +269,11 @@ BOOL selectedSegmentC;
         } else {
             cellView.titleLabelFilm.text = [NSString stringWithFormat:@"%@", _movie.original_title];
         }
-        NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
-        NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
-        
         [cellView.posterFilm cancelImageDownloadTask];
         cellView.posterFilm.image = [UIImage imageNamed:@"defaultImage"];
-        if (!_movie.posterMovieURL) {
+        if (!_movie.posterMovieUrl) {
+            NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, _movie.poster_path];
+            NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
             [cellView.posterFilm setImageWithURL:posterUrlComplete];
         }
     }
@@ -302,14 +299,12 @@ BOOL selectedSegmentC;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     MovieCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"popular" forIndexPath:indexPath];
     MoviePropertyObject *movie = self.movieCollectionResultsPop [indexPath.row];
     NSString *posterUrlcomplete = [NSString stringWithFormat:@"%@%@", kTMDbPosterPath, movie.poster_path];
     NSURL *posterUrlComplete = [NSURL URLWithString:posterUrlcomplete];
     [cell.posterCollection setImageWithURL:posterUrlComplete];
     return cell;
-    
 }
 
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -323,10 +318,5 @@ BOOL selectedSegmentC;
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
-}
-
 
 @end

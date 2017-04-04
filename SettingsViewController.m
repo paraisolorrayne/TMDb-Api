@@ -19,21 +19,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)saveLanguage {
     if (_ptSelect.enabled) {
-        
+        _enSelect.enabled = YES;
+        _frSelect.enabled = YES;
     } else if (_enSelect.enabled) {
-        
+        _ptSelect.enabled = YES;
+        _frSelect.enabled = YES; 
     } else if (_frSelect.enabled) {
-        
+        _ptSelect.enabled = YES;
+        _enSelect.enabled = YES;
     }
 }
 /*

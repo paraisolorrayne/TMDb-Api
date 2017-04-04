@@ -98,9 +98,11 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 
 
 -(void)captureGenreId:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
+    NSString *complete = @"https://api.themoviedb.org/3/genre/movie/list?api_key=625a7cbd9e0ae06da951620f6f0015d1&language=en-US";
     NSString *completeUrl = [NSString stringWithFormat:@"%@genre/movie/list?%@&language=%@", kUrlBase, kApiKey, kLanguageBR];
-    [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
-        NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
+    [self.manager GET:complete parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
+        //NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
+        NSArray *jsons = [response objectForKey: @"genres"];
         NSLog(@"%@", response);
         NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
         for (NSDictionary *json in jsons) {
@@ -108,15 +110,16 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
             [movies addObject:movie];
         }
         success(movies);
+        NSLog(@"%@", movies);
     } failure:error];
     
 }
 
 -(void)fetchGenre:(NSString *)idGenre success:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
-    NSString *completeUrl = [NSString stringWithFormat:@"%@/discover/movie?%@&with_genres=%@", kUrlBase, kApiKey, idGenre];
-    NSDictionary *params = @{@"results": idGenre ?: NSNull.null};
+    NSString *completeUrl = [NSString stringWithFormat:@"%@discover/movie?%@&with_genres=%@", kUrlBase, kApiKey, idGenre];
+    //NSDictionary *params = @{@"results": idGenre ?: NSNull.null};
     [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
-        NSLog(@"%@", params);
+       // NSLog(@"%@", params);
         NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSLog(@"%@", response);
         NSMutableArray *movies = [NSMutableArray arrayWithCapacity:jsons.count];
@@ -125,6 +128,7 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
             [movies addObject:movie];
         }
         success(movies);
+        NSLog(@"Result for fetch genre: %@", movies);
     } failure:error];
 }
 

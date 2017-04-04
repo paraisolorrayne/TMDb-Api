@@ -6,8 +6,8 @@
 //  Copyright © 2017 DevTech. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface SettingsViewController : ViewController
+@interface SettingsViewController : UIViewController
 
 @end
