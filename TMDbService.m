@@ -15,9 +15,9 @@ static NSString *const kSearchMovie = @"search/movie?";
 static NSString *const kSearchTV = @"search/tv";
 static NSString *const kSearchMoviePopular = @"movie/popular?";
 static NSString *const kSearchTVPopular = @"discover/tv?";
-static NSString *const kLanguageUS = @"&language=en-US&"; //ing us
-static NSString *const kLanguageBR = @"&language=pt-BR&"; //port br
-static NSString *const kLanguagePR = @"&language=pt-BR&"; //port portugal
+static NSString *const kLanguageUS = @"&language=en-US"; //ing us
+static NSString *const kLanguageBR = @"&language=pt-BR"; //port br
+static NSString *const kLanguagePR = @"&language=pt-BR"; //port portugal
 static NSString *const kLanguageFR = @"&language=fr-FR&"; //frances
 static NSString *const kTMDbMovieSearchPath = @"search/movie";
 static NSString *const kTMDbSearchParamQueryKey = @"query";
@@ -68,7 +68,7 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 }
 
 -(void)fetchPopular:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
-    NSString *completeUrl = [NSString stringWithFormat:@"%@%@?1%@%@", kUrlBase, kSearchMoviePopular, kLanguageBR, kApiKey];
+    NSString *completeUrl = [NSString stringWithFormat:@"%@%@?1%@&%@", kUrlBase, kSearchMoviePopular, kLanguageBR, kApiKey];
     [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
         NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSLog(@"%@", response);
@@ -98,9 +98,9 @@ static NSString *const kTMDbSearchResultsObjectIdKey = @"id";
 
 
 -(void)captureGenreId:(void (^)(NSArray<MoviePropertyObject *> *))success error:(void (^)(NSURLSessionDataTask *task, NSError *error))error {
-    NSString *complete = @"https://api.themoviedb.org/3/genre/movie/list?api_key=625a7cbd9e0ae06da951620f6f0015d1&language=en-US";
+    //NSString *complete = @"https://api.themoviedb.org/3/genre/movie/list?api_key=625a7cbd9e0ae06da951620f6f0015d1&language=en-US";
     NSString *completeUrl = [NSString stringWithFormat:@"%@genre/movie/list?%@&language=%@", kUrlBase, kApiKey, kLanguageBR];
-    [self.manager GET:complete parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
+    [self.manager GET:completeUrl parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id response) {
         //NSArray *jsons = [response objectForKey: kTMDbSearchResultsKey];
         NSArray *jsons = [response objectForKey: @"genres"];
         NSLog(@"%@", response);
